@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiMapPin, FiCalendar, FiUsers } from 'react-icons/fi';
+import { FiMapPin, FiCalendar } from 'react-icons/fi';
 
 /**
  * Experience Section Component

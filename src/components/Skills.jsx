@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiPython, SiJavascript, SiCplusplus, SiJava, SiReact, SiNodedotjs, SiMongodb, SiPostgresql, SiDocker, SiGit, SiLinux } from 'react-icons/si';
+import { SiPython, SiReact, SiDocker } from 'react-icons/si';
 import { FaDatabase, FaCode, FaBrain } from 'react-icons/fa';
 
 /**
@@ -8,7 +8,6 @@ import { FaDatabase, FaCode, FaBrain } from 'react-icons/fa';
  * Categorized skill cards with hover animations
  */
 const Skills = () => {
-  const [hoveredCategory, setHoveredCategory] = useState(null);
 
   const skillCategories = [
     {
