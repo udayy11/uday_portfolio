@@ -53,19 +53,19 @@ const Projects = () => {
       live: 'https://github.com/udayy11/linux-auto',
       featured: false,
     },
-    // {
-    //   id: 5,
-    //   title: 'AI Resume Analyzer',
-    //   description:
-    //     'Intelligent resume parsing tool using NLP to extract information, score resumes, and provide improvement suggestions.',
-    //   technologies: ['Python', 'NLP', 'Machine Learning', 'React', 'FastAPI'],
-    //   image: '📄',
-    //   github: '#',
-    //   live: '#',
-    //   featured: true,
-    // },
     {
       id: 5,
+      title: 'Neo Evolution - Space Exploration',
+      description:
+        'A space exploration website pioneering the space travel industry, providing real-time data on celestial bodies and space missions.',
+      technologies: ['React', 'Node.js', 'Express.js', 'MongoDB', 'NASA APIs'],
+      image: '/neoEvo.png',
+      github: 'https://github.com/udayy11/neoEvoRena',
+      live: 'https://github.com/udayy11/neoEvoRena',
+      featured: false,
+    },
+    {
+      id: 6,
       title: 'Portfolio Website',
       description:
         'Modern, responsive portfolio showcasing projects and skills with smooth animations and interactive UI elements.',
