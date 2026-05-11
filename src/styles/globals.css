@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Selection styling */
+::selection {
+  background-color: #10b981;
+  color: #fff;
+}
+
+/* Animate background gradient */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+  background-attachment: fixed;
+  font-family: 'Inter', sans-serif;
+  color: #e5e7eb;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effect */
+.glow-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Animated border */
+.animated-border {
+  position: relative;
+  background-color: transparent;
+  border: 2px solid transparent;
+  background-image: 
+    linear-gradient(#0f172a, #0f172a),
+    linear-gradient(135deg, #10b981, #06b6d4);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* Code block styling */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Link hover effect */
+a {
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #10b981;
+}
