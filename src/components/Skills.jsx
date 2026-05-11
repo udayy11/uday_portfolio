@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { SiPython, SiReact, SiDocker } from 'react-icons/si';
 import { FaDatabase, FaCode, FaBrain } from 'react-icons/fa';

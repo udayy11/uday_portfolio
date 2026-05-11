@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiCode, FiGitBranch, FiUsers, FiTarget } from 'react-icons/fi';
-import { MdEmojiEvents, MdAutoAwesome, MdTrendingUp, MdLightbulb } from 'react-icons/md';
+import { FiCode, FiGitBranch, FiUsers } from 'react-icons/fi';
+import { MdEmojiEvents, MdAutoAwesome, MdTrendingUp } from 'react-icons/md';
 
 /**
  * Achievements Section Component
