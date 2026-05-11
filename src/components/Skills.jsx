@@ -100,8 +100,6 @@ const Skills = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              onMouseEnter={() => setHoveredCategory(index)}
-              onMouseLeave={() => setHoveredCategory(null)}
               whileHover={{ y: -8 }}
               className="group relative h-full"
             >
