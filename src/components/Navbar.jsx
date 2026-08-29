@@ -1,107 +1,120 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiDownload } from 'react-icons/fi';
 
 /**
  * Navbar Component
- * Responsive navigation with smooth animations and dark theme
+ * Fixed navigation with scroll-aware background and responsive mobile menu
  */
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 32);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navItems = [
-    { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
     { label: 'Experience', href: '#experience' },
-    { label: 'Achievements', href: '#achievements' },
     { label: 'Contact', href: '#contact' },
   ];
 
   return (
     <motion.nav
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 z-50 glass-dark border-b border-emerald-500/20 backdrop-blur-md"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-zinc-950/80 backdrop-blur-xl border-b border-white/[0.06]'
+          : 'bg-transparent'
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2 cursor-pointer"
+          {/* Wordmark */}
+          <a
+            href="#hero"
+            className="flex items-center gap-2 text-zinc-100 hover:text-emerald-400 transition-colors"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-lg flex items-center justify-center">
-              <span className="font-bold text-slate-900 text-xl">{'<'}</span>
-            </div>
-            <span className="font-bold text-xl gradient-text hidden sm:inline">Portfolio</span>
-          </motion.div>
+            <span className="font-bold text-lg tracking-tight">UV</span>
+            <span className="text-zinc-500 font-light hidden sm:inline">/ portfolio</span>
+          </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
-              <motion.a
+              <a
                 key={item.label}
                 href={item.href}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                className="px-3 py-2 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200"
               >
                 {item.label}
-              </motion.a>
+              </a>
             ))}
           </div>
 
           {/* Resume Button */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center">
             <motion.a
               href="/resume.pdf"
               download="Uday_Verma_Resume.pdf"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-900 rounded-lg font-semibold hover:shadow-glow-lg transition-all duration-200"
+              whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-950 bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-colors duration-200"
             >
-              <FiDownload className="w-4 h-4" />
+              <FiDownload className="w-3.5 h-3.5" />
               <span>Resume</span>
             </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            onClick={toggleMenu}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors"
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 transition-colors"
+            aria-label="Toggle menu"
           >
-            {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+            {isOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden pb-4"
-          >
-            <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  whileHover={{ x: 5 }}
-                  className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-emerald-400 hover:bg-slate-700/50 rounded-lg transition-colors"
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden"
+            >
+              <div className="flex flex-col gap-1 pb-4 pt-2">
+                {navItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="px-3 py-2.5 text-sm text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 rounded-lg transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="/resume.pdf"
+                  download="Uday_Verma_Resume.pdf"
+                  className="mx-3 mt-2 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-zinc-950 bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-colors"
                 >
-                  {item.label}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-        )}
+                  <FiDownload className="w-3.5 h-3.5" />
+                  <span>Resume</span>
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
