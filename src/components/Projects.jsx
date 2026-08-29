@@ -3,14 +3,17 @@ import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiCode } from 'react-icons/fi';
 
 /**
- * Projects Section Component
- * Showcase of key projects with technologies and links
+ * Projects Section
+ * Featured projects get large cards, others get compact rows
  */
 const Projects = () => {
+  const ease = [0.16, 1, 0.3, 1];
+
   const projects = [
     {
       id: 1,
-      title: 'NexChain - AI Powered logistics agent',
+      title: 'NexChain',
+      subtitle: 'AI Powered Logistics Agent',
       description:
         'An AI agent that automates logistics operations using LLMs, optimizing routes and managing inventory with real-time data.',
       technologies: ['Python', 'LLMs', 'FastAPI', 'React', 'Docker'],
@@ -23,6 +26,7 @@ const Projects = () => {
     {
       id: 2,
       title: 'GameVerse',
+      subtitle: 'Real-time Multiplayer Platform',
       description:
         'A real-time multiplayer gaming platform built with Socket.io, featuring user authentication, game lobbies, and interactive gameplay.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'JWT'],
@@ -33,10 +37,11 @@ const Projects = () => {
     },
     {
       id: 3,
-      title: 'HackBVP - Hackathon Website for BVCOE',
+      title: 'HackBVP',
+      subtitle: 'Hackathon Website for BVCOE',
       description:
-        'Official website for BVCOE hackathon 2026, featuring event details, registration, and live updates with a modern design.',
-      technologies: ['React', 'Express.js', 'PostgreSQL', 'JavaScript', 'Tailwind CSS'],
+        'Official website for BVCOE hackathon 2026, featuring event details, registration, and live updates.',
+      technologies: ['React', 'Express.js', 'PostgreSQL', 'Tailwind CSS'],
       image: '/hackbvp.png',
       github: 'https://github.com/udayy11/HackBVP-7.0',
       live: 'https://hack-bvp-7-0.vercel.app/',
@@ -45,8 +50,9 @@ const Projects = () => {
     {
       id: 4,
       title: 'Linux Automation Toolkit',
+      subtitle: 'System Task Automation',
       description:
-        '~UNDER DEVELOPMENT~: Bash scripts and Python utilities for automating common Linux system tasks and server management operations.',
+        'Bash scripts and Python utilities for automating common Linux system tasks and server management.',
       technologies: ['Bash', 'Python', 'Linux', 'Shell Scripting'],
       image: '/linux_automation.jpg',
       github: 'https://github.com/udayy11/linux-auto',
@@ -55,9 +61,10 @@ const Projects = () => {
     },
     {
       id: 5,
-      title: 'Neo Evolution - Space Exploration',
+      title: 'Neo Evolution',
+      subtitle: 'Space Exploration Platform',
       description:
-        'A space exploration website pioneering the space travel industry, providing real-time data on celestial bodies and space missions.',
+        'A space exploration website providing real-time data on celestial bodies and space missions.',
       technologies: ['React', 'Node.js', 'Express.js', 'MongoDB', 'NASA APIs'],
       image: '/neoEvo.png',
       github: 'https://github.com/udayy11/neoEvoRena',
@@ -67,9 +74,10 @@ const Projects = () => {
     {
       id: 6,
       title: 'Portfolio Website',
+      subtitle: 'This Site',
       description:
-        'Modern, responsive portfolio showcasing projects and skills with smooth animations and interactive UI elements.',
-      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
+        'Modern, responsive portfolio showcasing projects and skills with smooth animations.',
+      technologies: ['React', 'Tailwind CSS', 'Framer Motion'],
       image: '/portfolio.png',
       github: 'https://github.com/udayy11/uday_portfolio',
       live: '#',
@@ -77,180 +85,180 @@ const Projects = () => {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const featured = projects.filter((p) => p.featured);
+  const other = projects.filter((p) => !p.featured);
 
   return (
     <section
       id="projects"
-      className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
+      className="py-24 sm:py-32 px-5 sm:px-6"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        {/* Section Title */}
+      <div className="max-w-6xl mx-auto">
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease }}
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-16"
         >
-          <h2 className="text-5xl sm:text-6xl font-bold mb-4">
-            <span className="gradient-text">Featured Projects</span>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-100">
+            Projects
           </h2>
-          <p className="text-gray-400 text-lg">Explore some of my latest work and contributions</p>
-        </motion.div>
-
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-        >
-          {projects.map((project) => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-2xl"
-            >
-              {/* Card Container */}
-              <div className="relative glass-dark p-6 rounded-2xl h-full flex flex-col transition-all duration-300 hover:glass">
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-900 text-xs font-bold rounded-full">
-                    Featured
-                  </div>
-                )}
-
-                {/* Image Placeholder */}
-                <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-40 object-cover rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300"
-                />
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col">
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
-                    {project.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-1">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-md border border-emerald-500/20"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Links */}
-                <div className="space-y-3">
-                  {/* For NexChain: Show both frontend and backend links */}
-                  {project.id === 1 && (
-                    <div className="text-xs text-gray-400 bg-slate-700/30 p-2 rounded border border-slate-600">
-                      ⚡ Start backend first before accessing frontend
-                    </div>
-                  )}
-                  
-                  <div className="flex gap-4 flex-wrap">
-                    <motion.a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 min-w-[80px] flex items-center justify-center space-x-2 px-3 py-2 bg-slate-700/50 hover:bg-emerald-500/20 text-gray-300 hover:text-emerald-400 rounded-lg font-medium transition-colors text-sm"
-                    >
-                      <FiGithub className="w-4 h-4" />
-                      <span>Code</span>
-                    </motion.a>
-
-                    {/* Backend link for NexChain */}
-                    {project.id === 1 && project.live2 && (
-                      <motion.a
-                        href={project.live2}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Backend - Start this first"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex-1 min-w-[90px] flex items-center justify-center space-x-2 px-3 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 hover:text-cyan-300 rounded-lg font-medium transition-colors border border-cyan-500/30 text-sm"
-                      >
-                        <FiExternalLink className="w-4 h-4" />
-                        <span>Backend</span>
-                      </motion.a>
-                    )}
-
-                    {/* Demo/Frontend link */}
-                    <motion.a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={project.id === 1 ? "Frontend - Start after backend" : "Live Demo"}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 min-w-[85px] flex items-center justify-center space-x-2 px-3 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 hover:text-emerald-300 rounded-lg font-medium transition-colors border border-emerald-500/30 text-sm"
-                    >
-                      <FiExternalLink className="w-4 h-4" />
-                      <span>{project.id === 1 ? 'Frontend' : 'Demo'}</span>
-                    </motion.a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* View All Projects Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center"
-        >
-          <motion.a
+          <a
             href="https://github.com/udayy11"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center space-x-2 px-8 py-4 bg-slate-700/50 hover:bg-emerald-500/20 text-gray-300 hover:text-emerald-400 rounded-lg font-semibold transition-colors border border-slate-600 hover:border-emerald-500/50"
+            className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-400 transition-colors"
           >
-            <FiCode className="w-5 h-5" />
-            <span>View All Projects on GitHub</span>
-          </motion.a>
+            <FiCode className="w-4 h-4" />
+            <span>View all on GitHub</span>
+          </a>
         </motion.div>
+
+        {/* Featured Projects: large cards with image */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {featured.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease, delay: i * 0.1 }}
+              className="group relative rounded-xl overflow-hidden border border-white/[0.06] bg-zinc-900/40"
+            >
+              {/* Image */}
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-zinc-100 mb-1">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-zinc-500 mb-3">{project.subtitle}</p>
+                <p className="text-sm text-zinc-400 leading-relaxed mb-4">
+                  {project.description}
+                </p>
+
+                {/* Tech tags */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-0.5 text-xs text-zinc-400 bg-zinc-800/60 rounded border border-white/[0.04]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div className="flex gap-3">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-emerald-400 transition-colors"
+                  >
+                    <FiGithub className="w-4 h-4" />
+                    <span>Code</span>
+                  </a>
+
+                  {project.id === 1 && project.live2 && (
+                    <a
+                      href={project.live2}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Backend"
+                      className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-emerald-400 transition-colors"
+                    >
+                      <FiExternalLink className="w-4 h-4" />
+                      <span>Backend</span>
+                    </a>
+                  )}
+
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={project.id === 1 ? 'Frontend' : 'Live Demo'}
+                    className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-emerald-400 transition-colors"
+                  >
+                    <FiExternalLink className="w-4 h-4" />
+                    <span>{project.id === 1 ? 'Frontend' : 'Demo'}</span>
+                  </a>
+                </div>
+
+                {/* NexChain note */}
+                {project.id === 1 && (
+                  <p className="mt-3 text-xs text-zinc-600">
+                    Start backend before accessing frontend
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Other Projects: compact rows */}
+        <div className="border-t border-white/[0.06]">
+          {other.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.4, ease, delay: i * 0.05 }}
+              className="group grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-4 py-5 border-b border-white/[0.06] items-center"
+            >
+              <div>
+                <div className="flex items-baseline gap-3 mb-1">
+                  <h3 className="text-base font-medium text-zinc-200 group-hover:text-emerald-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <span className="text-xs text-zinc-600">{project.subtitle}</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.technologies.slice(0, 4).map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs text-zinc-500"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 hover:text-emerald-400 transition-colors"
+                  aria-label={`${project.title} code`}
+                >
+                  <FiGithub className="w-4 h-4" />
+                </a>
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 hover:text-emerald-400 transition-colors"
+                  aria-label={`${project.title} demo`}
+                >
+                  <FiExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

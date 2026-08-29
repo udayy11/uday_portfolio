@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { FiMapPin, FiCalendar } from 'react-icons/fi';
 
 /**
- * Experience Section Component
- * Timeline-style experience cards with organization details
+ * Experience Section
+ * Vertical timeline, left-aligned, clean dots instead of emojis
  */
 const Experience = () => {
+  const ease = [0.16, 1, 0.3, 1];
+
   const experiences = [
     {
       id: 1,
@@ -14,7 +16,6 @@ const Experience = () => {
       organization: 'TEDx BVCOE',
       duration: 'June 2025 - Present',
       location: 'BVCOE, Delhi, India',
-      icon: '🎤',
       achievements: [
         'Managing senior speaker coordination and event operations',
         'Leading team collaboration for TEDx Talk 2026 flagship event',
@@ -28,7 +29,6 @@ const Experience = () => {
       organization: 'IEEE BVCOE',
       duration: 'June 2025 - Present',
       location: 'Delhi, India',
-      icon: '⚡',
       achievements: [
         'Organizing FUNIEEE technical events and competitions',
         'Managing BVEST workshop series for skill development',
@@ -42,7 +42,6 @@ const Experience = () => {
       organization: 'Self-Directed Projects',
       duration: 'May 2024 - Present',
       location: 'Remote',
-      icon: '💻',
       achievements: [
         'Developed multiple full-stack applications and AI tools',
         'Contributed to open-source projects and communities',
@@ -50,13 +49,12 @@ const Experience = () => {
         'Built portfolio of production-ready projects',
       ],
     },
-        {
+    {
       id: 4,
       title: 'Hackathon Organizer & Coordinator',
       organization: 'BVCOE College Events',
       duration: 'January 2024 - Present',
       location: 'BVCOE, Delhi, India',
-      icon: '🏆',
       achievements: [
         'Organized and managed 5+ college-level hackathons with 200+ participants',
         'Coordinated technical workshops and coding competitions',
@@ -66,125 +64,77 @@ const Experience = () => {
     },
   ];
 
-  
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6 },
-    },
-  };
-
   return (
     <section
       id="experience"
-      className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
+      className="py-24 sm:py-32 px-5 sm:px-6"
     >
-      <div className="max-w-4xl mx-auto w-full">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
+      <div className="max-w-3xl mx-auto">
+        {/* Section header */}
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease }}
+          className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-100 mb-16"
         >
-          <h2 className="text-5xl sm:text-6xl font-bold mb-4">
-            <span className="gradient-text">Experience</span>
-          </h2>
-          <p className="text-gray-400 text-lg">Journey and roles in organizations</p>
-        </motion.div>
+          Experience
+        </motion.h2>
 
         {/* Timeline */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="space-y-8 relative"
-        >
-          {/* Vertical Line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-500/50 via-emerald-500/20 to-transparent transform md:-translate-x-1/2"></div>
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-zinc-800" />
 
-          {experiences.map((experience, index) => (
-            <motion.div
-              key={experience.id}
-              variants={itemVariants}
-              className={`relative md:flex ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-            >
-              {/* Timeline Dot */}
-              <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 -translate-x-1/2 md:translate-x-0">
-                <motion.div
-                  whileHover={{ scale: 1.2 }}
-                  className="w-8 h-8 bg-slate-900 border-4 border-emerald-500 rounded-full flex items-center justify-center text-lg"
-                >
-                  {experience.icon}
-                </motion.div>
-              </div>
+          <div className="space-y-10">
+            {experiences.map((exp, i) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+                className="relative pl-8"
+              >
+                {/* Timeline dot */}
+                <div className="absolute left-0 top-2 w-[15px] h-[15px] rounded-full border-2 border-emerald-500 bg-zinc-950" />
 
-              {/* Content */}
-              <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-16 pl-16' : 'md:pl-16 pl-16'}`}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="glass-dark rounded-2xl p-6 hover:glass transition-all duration-300"
-                >
-                  {/* Header */}
-                  <div className="mb-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-2xl font-bold text-white group hover:text-emerald-400">
-                        {experience.title}
-                      </h3>
-                    </div>
-                    <p className="text-emerald-400 font-semibold text-lg mb-2">
-                      {experience.organization}
-                    </p>
+                {/* Content */}
+                <div>
+                  <h3 className="text-base font-semibold text-zinc-100">
+                    {exp.title}
+                  </h3>
+                  <p className="text-sm font-medium text-emerald-400 mt-0.5">
+                    {exp.organization}
+                  </p>
+
+                  <div className="flex flex-wrap gap-4 mt-2 text-xs text-zinc-500">
+                    <span className="inline-flex items-center gap-1.5">
+                      <FiCalendar className="w-3 h-3" />
+                      {exp.duration}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <FiMapPin className="w-3 h-3" />
+                      {exp.location}
+                    </span>
                   </div>
 
-                  {/* Meta Information */}
-                  <div className="flex flex-wrap gap-4 mb-6 text-sm text-gray-400">
-                    <div className="flex items-center space-x-2">
-                      <FiCalendar className="w-4 h-4" />
-                      <span>{experience.duration}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <FiMapPin className="w-4 h-4" />
-                      <span>{experience.location}</span>
-                    </div>
-                  </div>
-
-                  {/* Achievements */}
-                  <div className="space-y-3">
-                    {experience.achievements.map((achievement, idx) => (
-                      <motion.div
+                  <ul className="mt-4 space-y-2">
+                    {exp.achievements.map((achievement, idx) => (
+                      <li
                         key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="flex items-start space-x-3"
+                        className="flex items-start gap-2.5 text-sm text-zinc-400 leading-relaxed"
                       >
-                        <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <p className="text-gray-300 text-sm leading-relaxed">{achievement}</p>
-                      </motion.div>
+                        <div className="w-1 h-1 rounded-full bg-zinc-600 mt-2 flex-shrink-0" />
+                        {achievement}
+                      </li>
                     ))}
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
