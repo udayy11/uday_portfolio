@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiSend } from 'react-icons/fi';
+import { FiSend } from 'react-icons/fi';
 import { SiGmail, SiGithub } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa';
 import toast from 'react-hot-toast';
